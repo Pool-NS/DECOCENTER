@@ -31,7 +31,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $producto->nombre }}</h5>
+                                <h5 class="card-title">{{ $producto->name }}</h5>
                                 <p class="card-text">
                                     <strong>Stock:</strong> {{ $producto->stock }} <br>
                                     <strong>Precio:</strong> ${{ number_format($producto->price, 2) }} <br>
