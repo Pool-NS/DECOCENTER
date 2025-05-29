@@ -69,9 +69,10 @@ class ProductoController extends Controller
         return view('productos.edit', compact('producto'));
     }
 
-    // Actualizar producto
-    public function update(Request $request, $id)
+    // Actualiza un producto en la base de datos
+    public function update(Request $request, $id,Producto $producto)
     {
+        // Valida los datos enviados por el formulario
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
             'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
@@ -84,9 +85,16 @@ class ProductoController extends Controller
             'description.min' => 'La descripción debe tener al menos 10 caracteres.',
         ]);
 
+        // Encuentra el producto por ID
         $producto = Producto::findOrFail($id);
 
+        // Actualiza los datos del producto
         $producto->update($validated);
+
+        // Redirige a la lista de productos con un mensaje de éxito
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+
+        $producto->update($request->all());
 
         InventoryLog::create([
             'product_id' => $producto->id,
@@ -97,6 +105,7 @@ class ProductoController extends Controller
         ]);
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+
     }
 
     // Eliminar producto
