@@ -55,6 +55,13 @@ class ProductoController extends Controller
         return view('productos.index', compact('productos'));
     }
 
+    public function dashboard()
+    {
+        $productos = Producto::all();
+        return view('dashboard', compact('productos'));
+    }
+
+
     // Mostrar formulario para editar producto
     public function edit($id)
     {
