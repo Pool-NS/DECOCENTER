@@ -83,43 +83,27 @@ class ProductoController extends Controller
     }
 
     // Actualiza un producto en la base de datos
-    public function update(Request $request, $id,Producto $producto)
-    {
-        // Valida los datos enviados por el formulario
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
-            'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
-            'price' => ['required', 'numeric', 'min:0.01'],
-            'description' => ['required', 'string', 'min:10', 'max:500'],
-        ], [
-            'name.regex' => 'El nombre solo debe contener letras y espacios.',
-            'category.regex' => 'La categoría solo debe contener letras y espacios.',
-            'price.min' => 'El precio debe ser mayor que cero.',
-            'description.min' => 'La descripción debe tener al menos 10 caracteres.',
-        ]);
+    public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+        'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
+        'price' => ['required', 'numeric', 'min:0.01'],
+        'description' => ['required', 'string', 'min:10', 'max:500'],
+    ], [
+        'name.regex' => 'El nombre solo debe contener letras y espacios.',
+        'category.regex' => 'La categoría solo debe contener letras y espacios.',
+        'price.min' => 'El precio debe ser mayor que cero.',
+        'description.min' => 'La descripción debe tener al menos 10 caracteres.',
+    ]);
 
-        // Encuentra el producto por ID
-        $producto = Producto::findOrFail($id);
+    $producto = Producto::findOrFail($id);
 
-        // Actualiza los datos del producto
-        $producto->update($validated);
+    $producto->update($validated);
 
-        // Redirige a la lista de productos con un mensaje de éxito
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+    return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+}
 
-        $producto->update($request->all());
-
-        InventoryLog::create([
-            'product_id' => $producto->id,
-            'user_id' => auth()->id(),
-            'type' => 'entrada',
-            'quantity' => 0,
-            'description' => 'Se actualizó la información del producto.',
-        ]);
-
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
-
-    }
 
     // Elimina un producto
     public function destroy($id)
