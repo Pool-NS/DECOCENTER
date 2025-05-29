@@ -11,74 +11,60 @@ class ProductoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth'); // Aseguramos que solo los usuarios logueados puedan acceder
+        $this->middleware('auth'); // Solo usuarios autenticados pueden acceder
     }
 
-    // Muestra la vista de crear producto
+    // Mostrar formulario para crear producto
     public function create()
     {
         return view('productos.create');
     }
 
-    // Almacena el producto en la base de datos
+    // Almacenar producto en base de datos
     public function store(Request $request)
     {
+        // Convertir nombre a minúsculas para evitar duplicados por mayúsculas/minúsculas
+        $nameLower = strtolower($request->name);
+        $request->merge(['name' => $nameLower]);
+
+        // Validación con regla unique para evitar duplicados en columna 'name'
         $validated = $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u', 'unique:productos,name'],
             'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
             'price' => ['required', 'numeric', 'min:0.01'],
-            'stock' => ['required', 'integer', 'min:0'], 
+            'stock' => ['required', 'integer', 'min:0'],
             'description' => ['required', 'string', 'min:10', 'max:500'],
         ], [
             'name.regex' => 'El nombre solo debe contener letras y espacios.',
+            'name.unique' => 'Ya existe un producto con ese nombre.',
             'category.regex' => 'La categoría solo debe contener letras y espacios.',
             'price.min' => 'El precio debe ser mayor que cero.',
-            'stock.min' => 'El stock no puede ser negativo.', 
+            'stock.min' => 'El stock no puede ser negativo.',
             'description.min' => 'La descripción debe tener al menos 10 caracteres.',
         ]);
-        
 
-        $producto = new Producto();
+        Producto::create($validated);
 
-        $producto->name = $request->name;
-        $producto->category = $request->category;
-        $producto->price = $request->price;
-        $producto->stock = $request->stock; 
-        $producto->description = $request->description;
-
-        $producto->save();
-
-        $producto = Producto::create([
-            'name' => $request->name,
-            'category' => $request->category,
-            'price' => $request->price,
-            'stock' => $request->stock, // <- Este es clave
-            'description' => $request->description,
-        ]);
-        
+        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
     }
 
-    // Muestra la lista de productos
+    // Listar todos los productos
     public function index()
     {
         $productos = Producto::all();
         return view('productos.index', compact('productos'));
     }
 
-    // Muestra el formulario para editar un producto
+    // Mostrar formulario para editar producto
     public function edit($id)
     {
-        // Busca el producto por su ID
         $producto = Producto::findOrFail($id);
-
-        // Retorna la vista de edición con el producto
         return view('productos.edit', compact('producto'));
     }
 
-    // Actualiza un producto en la base de datos
-    public function update(Request $request, $id,Producto $producto)
+    // Actualizar producto
+    public function update(Request $request, $id)
     {
-        // Valida los datos enviados por el formulario
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
             'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
@@ -91,16 +77,9 @@ class ProductoController extends Controller
             'description.min' => 'La descripción debe tener al menos 10 caracteres.',
         ]);
 
-        // Encuentra el producto por ID
         $producto = Producto::findOrFail($id);
 
-        // Actualiza los datos del producto
         $producto->update($validated);
-
-        // Redirige a la lista de productos con un mensaje de éxito
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
-
-        $producto->update($request->all());
 
         InventoryLog::create([
             'product_id' => $producto->id,
@@ -111,24 +90,17 @@ class ProductoController extends Controller
         ]);
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
-
     }
 
-    // Elimina un producto
+    // Eliminar producto
     public function destroy($id)
-{
-    $producto = Producto::findOrFail($id);
+    {
+        $producto = Producto::findOrFail($id);
 
-    // Guardamos el stock antes de eliminar para registrar en el log
-    $cantidadEliminada = $producto->stock;
+        $cantidadEliminada = $producto->stock;
 
-    
+        $producto->delete();
 
-    // Ahora sí se puede eliminar
-    $producto->delete();
-
-    return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
-}
-
-
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+    }
 }

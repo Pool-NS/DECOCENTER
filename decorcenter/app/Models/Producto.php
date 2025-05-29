@@ -9,13 +9,12 @@ class Producto extends Model
 {
     use HasFactory;
 
-    // ✅ Aquí defines los campos que pueden ser asignados masivamente
+    // Campos asignables masivamente
     protected $fillable = [
         'name',
         'category',
         'price',
         'stock',
         'description',
-        // Agrega cualquier otro campo necesario
     ];
 }
