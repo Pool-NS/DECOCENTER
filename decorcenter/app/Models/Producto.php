@@ -14,6 +14,7 @@ class Producto extends Model
         'name',
         'category',
         'price',
+        'stock',
         'description',
         // Agrega cualquier otro campo necesario
     ];

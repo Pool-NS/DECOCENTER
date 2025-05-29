@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController; 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Necesario para el login
+use App\Http\Controllers\InventoryLogController;
 
 // Ruta principal de la aplicación
 Route::get('/', function () {
@@ -39,6 +40,10 @@ Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionControlle
 
 // Ruta para el dashboard
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/historial-inventario', [InventoryLogController::class, 'index'])->name('inventory.logs');
+
+Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
 
 // Cargar las rutas de autenticación generadas por Breeze

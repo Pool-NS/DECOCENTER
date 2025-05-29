@@ -34,7 +34,7 @@
                                 <h5 class="card-title">{{ $producto->nombre }}</h5>
                                 <p class="card-text">
                                     <strong>Stock:</strong> {{ $producto->stock }} <br>
-                                    <strong>Precio:</strong> ${{ number_format($producto->precio, 2) }} <br>
+                                    <strong>Precio:</strong> ${{ number_format($producto->price, 2) }} <br>
                                 </p>
 
                                 <!-- Botones de acción -->

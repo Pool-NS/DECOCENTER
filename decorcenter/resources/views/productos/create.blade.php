@@ -139,6 +139,14 @@
         @enderror
 
         <label>
+            Stock:
+            <input type="number" name="stock" value="{{ old('stock') }}" placeholder="Ej. 20" required>
+        </label>
+        @error('stock')
+            <span>*{{ $message }}</span>
+        @enderror
+        
+        <label>
             Descripción:
             <textarea name="description" rows="5" placeholder="Describe el producto">{{ old('description') }}</textarea>
         </label>

@@ -162,6 +162,7 @@
                 <a href="{{ route('productos.index') }}">Ver Productos</a>
                 <a href="{{ route('productos.create') }}">Agregar Producto</a>
                 <a href="{{ route('dashboard') }}">Panel de Control</a>
+                <a href="{{ route('inventory.logs') }}">Historial de Inventario</a>
             </div>
 
             <div class="col-md-9 content">

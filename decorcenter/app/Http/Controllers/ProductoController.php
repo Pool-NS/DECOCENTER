@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\InventoryLog;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
@@ -25,17 +27,35 @@ class ProductoController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
             'category' => ['required', 'string', 'min:3', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
             'price' => ['required', 'numeric', 'min:0.01'],
+            'stock' => ['required', 'integer', 'min:0'], 
             'description' => ['required', 'string', 'min:10', 'max:500'],
         ], [
             'name.regex' => 'El nombre solo debe contener letras y espacios.',
             'category.regex' => 'La categoría solo debe contener letras y espacios.',
             'price.min' => 'El precio debe ser mayor que cero.',
+            'stock.min' => 'El stock no puede ser negativo.', 
             'description.min' => 'La descripción debe tener al menos 10 caracteres.',
         ]);
+        
 
-        Producto::create($validated);
+        $producto = new Producto();
 
-        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
+        $producto->name = $request->name;
+        $producto->category = $request->category;
+        $producto->price = $request->price;
+        $producto->stock = $request->stock; 
+        $producto->description = $request->description;
+
+        $producto->save();
+
+        $producto = Producto::create([
+            'name' => $request->name,
+            'category' => $request->category,
+            'price' => $request->price,
+            'stock' => $request->stock, // <- Este es clave
+            'description' => $request->description,
+        ]);
+        
     }
 
     // Muestra la lista de productos
@@ -56,7 +76,7 @@ class ProductoController extends Controller
     }
 
     // Actualiza un producto en la base de datos
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,Producto $producto)
     {
         // Valida los datos enviados por el formulario
         $validated = $request->validate([
@@ -79,18 +99,36 @@ class ProductoController extends Controller
 
         // Redirige a la lista de productos con un mensaje de éxito
         return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+
+        $producto->update($request->all());
+
+        InventoryLog::create([
+            'product_id' => $producto->id,
+            'user_id' => auth()->id(),
+            'type' => 'entrada',
+            'quantity' => 0,
+            'description' => 'Se actualizó la información del producto.',
+        ]);
+
+        return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+
     }
 
     // Elimina un producto
     public function destroy($id)
-    {
-        // Encuentra el producto por ID
-        $producto = Producto::findOrFail($id);
+{
+    $producto = Producto::findOrFail($id);
 
-        // Elimina el producto
-        $producto->delete();
+    // Guardamos el stock antes de eliminar para registrar en el log
+    $cantidadEliminada = $producto->stock;
 
-        // Redirige a la lista de productos con un mensaje de éxito
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
-    }
+    
+
+    // Ahora sí se puede eliminar
+    $producto->delete();
+
+    return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+}
+
+
 }
