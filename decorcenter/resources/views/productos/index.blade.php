@@ -72,8 +72,10 @@
         <tr>
             <th>Nombre</th>
             <th>Categoría</th>
+            <th>Stock</th>
             <th>Precio</th>
             <th>Descripción</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -81,8 +83,14 @@
             <tr>
                 <td>{{ $producto->name }}</td>
                 <td>{{ $producto->category }}</td>
+                <td>{{ $producto->stock }}</td>
                 <td>${{ number_format($producto->price, 2) }}</td>
                 <td>{{ $producto->description }}</td>
+                <td>
+                    <a href="{{ route('productos.vender.form', $producto->id) }}" class="btn-agregar" style="background-color: #f39c12;">
+                        Vender
+                    </a>
+                </td>
             </tr>
         @endforeach
     </tbody>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Necesario para el login
 use App\Http\Controllers\InventoryLogController;
+use App\Http\Controllers\VentaController;
 
 // Ruta principal de la aplicación
 Route::get('/', function () {
@@ -48,3 +49,7 @@ Route::delete('/productos/{id}', [ProductoController::class, 'destroy'])->name('
 
 // Cargar las rutas de autenticación generadas por Breeze
 require __DIR__.'/auth.php';
+
+// Rutas para ventas
+Route::get('/productos/{id}/vender', [VentaController::class, 'formulario'])->name('productos.vender.form');
+Route::post('/productos/{id}/vender', [VentaController::class, 'procesar'])->name('productos.vender.procesar');
