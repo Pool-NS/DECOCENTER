@@ -212,6 +212,8 @@
                         <a href="{{ route('reportes.ventas_por_mes') }}" class="ms-3 d-block mt-2">📈 Ventas por mes</a>
                         <a href="{{ route('reportes.productos_mas_vendidos') }}" class="ms-3 d-block mt-2">🔥 Productos más vendidos</a>
                         <a href="{{ route('reportes.variacion_stock') }}" class="ms-3 d-block mt-2">⚠️ Variación de Stock</a>
+                        <a href="{{ route('reportes.usuarios_registrados') }}" class="ms-3 d-block mt-2">👥 Usuarios Registrados</a>
+
                     </div>
                 </div>
             </div>

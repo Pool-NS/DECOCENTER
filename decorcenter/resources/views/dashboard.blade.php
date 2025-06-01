@@ -77,6 +77,7 @@
           <a href="{{ route('reportes.ventas_por_mes') }}" class="btn btn-outline-primary w-100 mb-2">📈 Ventas por mes</a>
           <a href="{{ route('reportes.productos_mas_vendidos') }}" class="btn btn-outline-primary w-100 mb-2">🔥 Productos más vendidos</a>
           <a href="{{ route('reportes.variacion_stock') }}" class="btn btn-outline-primary w-100 mb-2">⚠️ Variación de Stock</a>
+          <a href="{{ route('reportes.usuarios_registrados') }}" class="btn btn-outline-primary w-100 mb-2">👥 Usuarios Registrados</a>
 
         </div>
         <div class="modal-footer">

@@ -78,4 +78,14 @@ class ReporteController extends Controller
 
         return view('reportes.variacion_stock', compact('logs', 'stocksActuales'));
     }
+
+    public function usuariosRegistrados()
+    {
+        $usuarios = \App\Models\User::select('name', 'email', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('reportes.usuarios_registrados', compact('usuarios'));
+    }
+
 }

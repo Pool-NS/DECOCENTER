@@ -59,3 +59,4 @@ Route::post('/productos/{id}/vender', [VentaController::class, 'procesar'])->nam
 Route::get('/reportes/ventas-por-mes', [ReporteController::class, 'ventasPorMes'])->name('reportes.ventas_por_mes');
 Route::get('/reportes/productos-mas-vendidos', [ReporteController::class, 'productosMasVendidos'])->name('reportes.productos_mas_vendidos');
 Route::get('/reportes/variacion-stock', [ReporteController::class, 'variacionStock'])->name('reportes.variacion_stock');
+Route::get('/reportes/usuarios-registrados', [ReporteController::class, 'usuariosRegistrados'])->name('reportes.usuarios_registrados');
