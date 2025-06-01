@@ -43,7 +43,18 @@ class ProductoController extends Controller
             'description.min' => 'La descripción debe tener al menos 10 caracteres.',
         ]);
 
-        Producto::create($validated);
+        $producto = Producto::create($validated);
+
+        // Registrar entrada inicial de stock si el stock es mayor a 0
+        if ($producto->stock > 0) {
+            \App\Models\InventoryLog::create([
+                'product_id' => $producto->id,
+                'user_id' => auth()->id(),
+                'type' => 'entrada',
+                'quantity' => $producto->stock,
+                'description' => 'Registro inicial de stock al crear el producto.',
+            ]);
+        }
 
         return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
     }
