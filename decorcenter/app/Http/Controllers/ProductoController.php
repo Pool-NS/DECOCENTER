@@ -90,24 +90,25 @@ class ProductoController extends Controller
         // Encuentra el producto por ID
         $producto = Producto::findOrFail($id);
 
+        // Calcula la diferencia de stock
+        $stockAnterior = $producto->stock;
+        $nuevoStock = $validated['stock'];
+        $diferencia = $nuevoStock - $stockAnterior;
+
         // Actualiza los datos del producto
         $producto->update($validated);
 
-        // Redirige a la lista de productos con un mensaje de éxito
-        //return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
-
-        //$producto->update($request->all());
-
-        InventoryLog::create([
-            'product_id' => $producto->id,
-            'user_id' => auth()->id(),
-            'type' => 'entrada',
-            'quantity' => 0,
-            'description' => 'Se actualizó la información del producto.',
-        ]);
+        if ($diferencia != 0) {
+            InventoryLog::create([
+                'product_id' => $producto->id,
+                'user_id' => auth()->id(),
+                'type' => $diferencia > 0 ? 'entrada' : 'salida',
+                'quantity' => abs($diferencia),
+                'description' => 'Ajuste de stock manual al editar producto.',
+            ]);
+        }      
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
-
     }
 
     // Eliminar producto

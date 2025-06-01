@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
 
 class ReporteController extends Controller
@@ -53,5 +55,27 @@ class ReporteController extends Controller
             ->get();
 
         return view('reportes.productos_mas_vendidos', compact('productosMasVendidos'));
+    }
+
+    public function variacionStock()
+    {
+        // Obtenemos todos los registros de inventario con relación al producto
+        $logs = DB::table('inventory_logs')
+            ->join('productos', 'inventory_logs.product_id', '=', 'productos.id')
+            ->select(
+                'productos.name as producto',
+                DB::raw('DATE(inventory_logs.created_at) as fecha'),
+                DB::raw('SUM(CASE WHEN inventory_logs.type = "entrada" THEN inventory_logs.quantity ELSE 0 END) as entradas'),
+                DB::raw('SUM(CASE WHEN inventory_logs.type = "salida" THEN inventory_logs.quantity ELSE 0 END) as salidas')
+            )
+            ->groupBy('producto', 'fecha')
+            ->orderBy('fecha', 'asc')
+            ->orderBy('producto', 'asc')
+            ->get();
+
+        // También necesitamos el stock actual por producto
+        $stocksActuales = \App\Models\Producto::pluck('stock', 'name'); // ['nombre' => stock]
+
+        return view('reportes.variacion_stock', compact('logs', 'stocksActuales'));
     }
 }

@@ -19,4 +19,10 @@ class Producto extends Model
         'stock',
         'description',
     ];
+
+    public function inventoryLogs()
+    {
+        return $this->hasMany(InventoryLog::class, 'product_id');
+    }
+
 }
