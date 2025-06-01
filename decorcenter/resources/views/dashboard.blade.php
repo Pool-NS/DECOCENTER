@@ -38,6 +38,7 @@
                                 <p class="card-text">
                                     <strong>Stock:</strong> {{ $producto->stock }} <br>
                                     <strong>Precio:</strong> ${{ number_format($producto->price, 2) }} <br>
+                                    <strong>Descripción:</strong> {{ $producto->description }}
                                 </p>
 
                                 <!-- Botones de acción -->
