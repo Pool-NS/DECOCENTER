@@ -159,10 +159,19 @@
             @auth
             <div class="col-md-3 sidebar">
                 <h4>Bienvenido, {{ Auth::user()->name }}</h4>
+                <a href="{{ route('dashboard') }}">Panel de Control</a>
                 <a href="{{ route('productos.index') }}">Ver Productos</a>
                 <a href="{{ route('productos.create') }}">Agregar Producto</a>
-                <a href="{{ route('dashboard') }}">Panel de Control</a>
                 <a href="{{ route('inventory.logs') }}">Historial de Inventario</a>
+                <!-- Desplegable de Reportes -->
+                <div class="mt-3">
+                    <a class="d-block" data-bs-toggle="collapse" href="#submenuReportes" role="button" aria-expanded="false" aria-controls="submenuReportes">
+                        📊 Reportes ▾
+                    </a>
+                    <div class="collapse" id="submenuReportes">
+                        <a href="{{ route('reportes.ventas_por_mes') }}" class="ms-3 d-block mt-2">📈 Ventas por mes</a>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-9 content">

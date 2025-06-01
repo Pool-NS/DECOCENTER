@@ -12,7 +12,10 @@
             <p class="text-white">Panel de Control de Inventario</p>
             <a href="{{ route('productos.index') }}" class="btn btn-primary btn-block">Ver Productos</a>
             <a href="{{ route('productos.create') }}" class="btn btn-primary btn-block mt-3">Agregar Producto</a>
-            <a href="{{ route('dashboard') }}" class="btn btn-secondary btn-block mt-3">Panel de Control</a>
+            <!-- Botón que abre el modal de Reportes -->
+            <button type="button" class="btn btn-primary btn-block mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalReportes">
+                📊 Reportes
+            </button>
         </div>
 
         <!-- Columna para mostrar los productos -->
@@ -60,4 +63,22 @@
         </div>
     </div>
 </div>
+<!-- Modal de Reportes -->
+<div class="modal fade" id="modalReportes" tabindex="-1" aria-labelledby="modalReportesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="modalReportesLabel">📊 Reportes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Selecciona el reporte que deseas visualizar:</p>
+          <a href="{{ route('reportes.ventas_por_mes') }}" class="btn btn-outline-primary w-100 mb-2">📈 Ventas por mes</a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>  
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Venta;
 
 class VentaController extends Controller
 {
@@ -24,6 +25,13 @@ class VentaController extends Controller
         $cantidad = $request->input('cantidad');
         $producto->stock -= $cantidad;
         $producto->save();
+
+        // Guardar la venta
+        Venta::create([
+            'producto_id' => $producto->id,
+            'cantidad' => $cantidad,
+            'precio_unitario' => $producto->price,
+        ]);
 
         $total = $producto->price * $cantidad;
 

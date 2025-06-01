@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Necesario para el login
 use App\Http\Controllers\InventoryLogController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\ReporteController;
 
 // Ruta principal de la aplicación
 Route::get('/', function () {
@@ -53,3 +54,6 @@ require __DIR__.'/auth.php';
 // Rutas para ventas
 Route::get('/productos/{id}/vender', [VentaController::class, 'formulario'])->name('productos.vender.form');
 Route::post('/productos/{id}/vender', [VentaController::class, 'procesar'])->name('productos.vender.procesar');
+
+// Rutas para reportes
+Route::get('/reportes/ventas-por-mes', [ReporteController::class, 'ventasPorMes'])->name('reportes.ventas_por_mes');
