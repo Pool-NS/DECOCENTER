@@ -1,6 +1,6 @@
 @extends('layouts.plantilla')
 
-@section('title', 'Reporte de ventas por mes')
+@section('title', 'Productos Más Vendidos')
 
 @section('content')
 <style>
@@ -41,41 +41,20 @@
     }
 </style>
 
-<h1>Reporte de Ventas</h1>
+<h1>Reporte de Productos Más Vendidos</h1>
 
-<h2>Ventas Totales por Mes</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Mes</th>
-            <th>Total Vendido (S/.)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($ventasPorMes as $venta)
-            <tr>
-                <td>{{ $venta->mes }}</td>
-                <td>S/. {{ number_format($venta->total_ventas, 2) }}</td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<h2>Ventas por Producto</h2>
 <table>
     <thead>
         <tr>
             <th>Producto</th>
-            <th>Mes</th>
-            <th>Total Vendido (S/.)</th>
+            <th>Total Vendido (unidades)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($ventasPorProducto as $detalle)
+        @foreach ($productosMasVendidos as $producto)
             <tr>
-                <td>{{ $detalle->producto }}</td>
-                <td>{{ $detalle->mes }}</td>
-                <td>S/. {{ number_format($detalle->total_ventas, 2) }}</td>
+                <td>{{ $producto->name }}</td>
+                <td>{{ $producto->total_vendido }}</td>
             </tr>
         @endforeach
     </tbody>

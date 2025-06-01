@@ -74,6 +74,7 @@
         <div class="modal-body">
           <p>Selecciona el reporte que deseas visualizar:</p>
           <a href="{{ route('reportes.ventas_por_mes') }}" class="btn btn-outline-primary w-100 mb-2">📈 Ventas por mes</a>
+          <a href="{{ route('reportes.productos_mas_vendidos') }}" class="btn btn-outline-primary w-100 mb-2">🔥 Productos más vendidos</a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

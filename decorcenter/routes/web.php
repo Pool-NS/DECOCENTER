@@ -57,3 +57,4 @@ Route::post('/productos/{id}/vender', [VentaController::class, 'procesar'])->nam
 
 // Rutas para reportes
 Route::get('/reportes/ventas-por-mes', [ReporteController::class, 'ventasPorMes'])->name('reportes.ventas_por_mes');
+Route::get('/reportes/productos-mas-vendidos', [ReporteController::class, 'productosMasVendidos'])->name('reportes.productos_mas_vendidos');

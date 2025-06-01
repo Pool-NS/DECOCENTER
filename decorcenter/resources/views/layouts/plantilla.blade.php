@@ -176,6 +176,7 @@
                     </a>
                     <div class="collapse" id="submenuReportes">
                         <a href="{{ route('reportes.ventas_por_mes') }}" class="ms-3 d-block mt-2">📈 Ventas por mes</a>
+                        <a href="{{ route('reportes.productos_mas_vendidos') }}" class="ms-3 d-block mt-2">🔥 Productos más vendidos</a>
                     </div>
                 </div>
             </div>

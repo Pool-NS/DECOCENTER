@@ -33,4 +33,25 @@ class ReporteController extends Controller
 
         return view('reportes.ventas_por_mes', compact('ventasPorMes', 'ventasPorProducto'));
     }
+
+    public function productosMasVendidos()
+    {
+        $productosMasVendidos = DB::table('ventas')
+            ->select('producto_id', DB::raw('SUM(cantidad) as total_vendido'))
+            ->groupBy('producto_id')
+            ->orderByDesc('total_vendido')
+            ->limit(10)  // opcional, por ejemplo los top 10
+            ->get();
+
+        // Para mostrar el nombre del producto, hacemos join con la tabla productos
+        $productosMasVendidos = DB::table('ventas')
+            ->join('productos', 'ventas.producto_id', '=', 'productos.id')
+            ->select('productos.name', DB::raw('SUM(ventas.cantidad) as total_vendido'))
+            ->groupBy('productos.name')
+            ->orderByDesc('total_vendido')
+            ->limit(10)
+            ->get();
+
+        return view('reportes.productos_mas_vendidos', compact('productosMasVendidos'));
+    }
 }
