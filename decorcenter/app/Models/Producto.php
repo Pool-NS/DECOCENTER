@@ -9,6 +9,8 @@ class Producto extends Model
 {
     use HasFactory;
 
+    protected $table = 'productos';
+
     // Campos asignables masivamente
     protected $fillable = [
         'name',
