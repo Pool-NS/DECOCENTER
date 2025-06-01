@@ -115,16 +115,21 @@
 <body>
 
     <!-- Barra de navegación superior -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">DECOR CENTER</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark position-relative">
+        <div class="container position-relative">
+            <!-- Marca centrada -->
+            <a class="navbar-brand position-absolute start-50 translate-middle-x" href="{{ route('dashboard') }}">
+                DECOR CENTER
+            </a>
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="navbar-nav ms-auto">
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="navbar-nav">
                     <a class="nav-link" href="{{ route('dashboard') }}">Inicio</a>
-                    @if(Auth::check()) <!-- Solo mostrar esto si el usuario está logueado -->
+                    @if(Auth::check())
                         <a class="nav-link" href="{{ route('profile.edit') }}">Perfil</a>
                         <form action="{{ route('logout') }}" method="POST" style="display:inline;">
                             @csrf
@@ -138,6 +143,7 @@
             </div>
         </div>
     </nav>
+
 
     <!-- Contenedor principal -->
     <div class="container-fluid mt-4">
