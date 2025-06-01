@@ -46,6 +46,9 @@
             left: 0;
             width: 250px;
             transition: width 0.3s ease;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1040;
         }
 
         .sidebar a {
@@ -62,10 +65,38 @@
             padding: 10px;
         }
 
+        #toggleSidebar {
+            background: none;
+            border: none;
+            color: #ecf0f1;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+            z-index: 1051;
+        }
+
+        #toggleSidebar:hover {
+            color: #3498db;
+        }
+
+        @media (max-width: 768px) {
+            #toggleSidebar {
+                font-size: 1.3rem;
+                margin-right: 10px;
+            }
+        }
+        body.sidebar-visible .sidebar {
+            transform: translateX(0);
+        }
+        body.sidebar-visible .content {
+            padding-left: 270px;
+        }
+
         /* Contenido principal */
         .content {
-            margin-left: 270px; /* Deja espacio para la barra lateral */
+            margin-left: 0px; /* Deja espacio para la barra lateral */
             padding: 20px;
+            transition: margin-left 0.3s ease;
         }
 
         /* Pie de página */
@@ -117,6 +148,9 @@
     <!-- Barra de navegación superior -->
     <nav class="navbar navbar-expand-lg navbar-dark position-relative">
         <div class="container position-relative">
+            <button class="btn btn-outline-light me-3" id="toggleSidebar">
+                ☰
+            </button>            
             <!-- Marca centrada -->
             <a class="navbar-brand position-absolute start-50 translate-middle-x" href="{{ route('dashboard') }}">
                 DECOR CENTER
@@ -163,8 +197,8 @@
 
             <!-- Contenido de la página para usuarios logueados -->
             @auth
-            <div class="col-md-3 sidebar">
-                <h4>Bienvenido, {{ Auth::user()->name }}</h4>
+            <div class="sidebar" id="sidebar">
+                <h4 class="mt-5">Bienvenido, {{ Auth::user()->name }}</h4>
                 <a href="{{ route('dashboard') }}">Panel de Control</a>
                 <a href="{{ route('productos.index') }}">Ver Productos</a>
                 <a href="{{ route('productos.create') }}">Agregar Producto</a>
@@ -181,7 +215,7 @@
                 </div>
             </div>
 
-            <div class="col-md-9 content">
+            <div class="content">
                 @yield('content')
             </div>
             @endauth
@@ -195,5 +229,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function () {
+            document.body.classList.toggle('sidebar-visible');
+        });
+    </script>       
+    
 </body>
 </html>

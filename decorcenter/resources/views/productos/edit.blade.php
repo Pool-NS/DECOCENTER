@@ -7,11 +7,8 @@
     body {
         background: linear-gradient(135deg, #1f1f1f, #2e3b4e);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
         margin: 0;
+        padding: 0;
     }
 
     .form-container {
@@ -22,6 +19,7 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         color: #f0f0f0;
         width: 400px;
+        margin: 50px auto;
     }
 
     h1 {
@@ -58,7 +56,7 @@
         resize: none;
     }
 
-    button {
+    .form-container button {
         width: 100%;
         padding: 0.8rem;
         border: none;
@@ -71,7 +69,7 @@
         transition: background-color 0.3s ease;
     }
 
-    button:hover {
+    .form-container button:hover {
         background-color: #a88e56;
     }
 
@@ -96,6 +94,12 @@
     .btn-volver:hover {
         background-color: #ffffff40;
     }
+
+    /* Evitar que el botón toggle se ensanche */
+    #toggleSidebar {
+        width: auto !important;
+        padding: 0.25rem 0.75rem !important;
+    }
 </style>
 
 <div class="form-container">
@@ -103,10 +107,10 @@
     <form action="{{ route('productos.update', $producto->id) }}" method="POST">
         @csrf
         @method('PUT')
-        
+
         <label>
             Nombre del producto:
-            <input type="text" name="name" value="{{ old('name', $producto->name) }}" placeholder="Ej. Silla de oficina">
+            <input type="text" name="name" value="{{ old('name', $producto->name) }}" placeholder="Ej. Silla de oficina" required>
         </label>
         @error('name')
             <span>*{{ $message }}</span>
@@ -114,7 +118,7 @@
 
         <label>
             Categoría:
-            <input type="text" name="category" value="{{ old('category', $producto->category) }}" placeholder="Ej. Muebles">
+            <input type="text" name="category" value="{{ old('category', $producto->category) }}" placeholder="Ej. Muebles" required>
         </label>
         @error('category')
             <span>*{{ $message }}</span>
@@ -122,9 +126,17 @@
 
         <label>
             Precio:
-            <input type="number" name="price" step="0.01" value="{{ old('price', $producto->price) }}" placeholder="Ej. 149.99">
+            <input type="number" name="price" step="0.01" value="{{ old('price', $producto->price) }}" placeholder="Ej. 149.99" required>
         </label>
         @error('price')
+            <span>*{{ $message }}</span>
+        @enderror
+
+        <label>
+            Stock:
+            <input type="number" name="stock" value="{{ old('stock', $producto->stock) }}" placeholder="Ej. 20" required>
+        </label>
+        @error('stock')
             <span>*{{ $message }}</span>
         @enderror
 
@@ -141,4 +153,5 @@
 
     <a href="{{ url('productos') }}" class="btn-volver">← Volver a Productos</a>
 </div>
+
 @endsection

@@ -10,8 +10,8 @@
             <h4 class="text-white">Bienvenido, {{ Auth::user()->name }}</h4>
             <hr class="border-white">
             <p class="text-white">Panel de Control de Inventario</p>
-            <a href="{{ route('productos.index') }}" class="btn btn-primary btn-block">Ver Productos</a>
-            <a href="{{ route('productos.create') }}" class="btn btn-primary btn-block mt-3">Agregar Producto</a>
+            <a href="{{ route('productos.index') }}" class="btn btn-primary btn-block mt-3 w-100">Ver Productos</a>
+            <a href="{{ route('productos.create') }}" class="btn btn-primary btn-block mt-3 w-100">Agregar Producto</a>
             <!-- Botón que abre el modal de Reportes -->
             <button type="button" class="btn btn-primary btn-block mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalReportes">
                 📊 Reportes

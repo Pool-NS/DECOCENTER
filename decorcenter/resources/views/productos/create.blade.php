@@ -71,6 +71,11 @@
         transition: background-color 0.3s ease;
     }
 
+    #toggleSidebar {
+        width: auto !important;
+        padding: 0.25rem 0.75rem !important;
+    }
+
     button:hover {
         background-color: #a88e56;
     }
