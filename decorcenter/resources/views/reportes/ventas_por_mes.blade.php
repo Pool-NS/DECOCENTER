@@ -73,7 +73,7 @@
     <tbody>
         @foreach ($ventasPorProducto as $detalle)
             <tr>
-                <td>{{ $detalle->producto }}</td>
+                <td>{{ strtoupper($detalle->producto) }}</td>
                 <td>{{ $detalle->mes }}</td>
                 <td>S/. {{ number_format($detalle->total_ventas, 2) }}</td>
             </tr>

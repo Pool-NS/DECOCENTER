@@ -53,7 +53,7 @@
     <tbody>
         @foreach ($productosMasVendidos as $producto)
             <tr>
-                <td>{{ $producto->name }}</td>
+                <td>{{ strtoupper($producto->name) }}</td>
                 <td>{{ $producto->total_vendido }}</td>
             </tr>
         @endforeach

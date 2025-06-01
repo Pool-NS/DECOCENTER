@@ -81,7 +81,7 @@
     <tbody>
         @foreach ($productos as $producto)
             <tr>
-                <td>{{ $producto->name }}</td>
+                <td>{{ strtoupper($producto->name) }}</td>
                 <td>{{ $producto->category }}</td>
                 <td>{{ $producto->stock }}</td>
                 <td>${{ number_format($producto->price, 2) }}</td>

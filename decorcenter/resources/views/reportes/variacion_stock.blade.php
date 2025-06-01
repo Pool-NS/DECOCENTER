@@ -57,7 +57,7 @@
         @foreach ($logs as $item)
             <tr>
                 <td>{{ $item->fecha }}</td>
-                <td>{{ $item->producto }}</td>
+                <td>{{ strtoupper($item->producto) }}</td>
                 <td>{{ $item->entradas }}</td>
                 <td>{{ $item->salidas }}</td>
                 <td>{{ $stocksActuales[$item->producto] ?? 'N/A' }}</td>
