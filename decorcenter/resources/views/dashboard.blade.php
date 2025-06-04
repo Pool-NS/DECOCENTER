@@ -6,16 +6,20 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Columna lateral para el color de fondo y mostrar el nombre del usuario -->
-        <div class="col-md-3 bg-info py-4" style="border-radius: 8px;">
+        <div class="col-md-3 bg-info py-4 h-auto align-self-start" style="border-radius: 8px;">
             <h4 class="text-white">Bienvenido, {{ Auth::user()->name }}</h4>
             <hr class="border-white">
             <p class="text-white">Panel de Control de Inventario</p>
             <a href="{{ route('productos.index') }}" class="btn btn-primary btn-block mt-3 w-100">Ver Productos</a>
+            @role('admin|editor')
             <a href="{{ route('productos.create') }}" class="btn btn-primary btn-block mt-3 w-100">Agregar Producto</a>
+            @endrole
             <!-- Botón que abre el modal de Reportes -->
+            @role('admin')
             <button type="button" class="btn btn-primary btn-block mt-3 w-100" data-bs-toggle="modal" data-bs-target="#modalReportes">
                 📊 Reportes
             </button>
+            @endrole
         </div>
 
         <!-- Columna para mostrar los productos -->
@@ -44,9 +48,12 @@
                                 <!-- Botones de acción -->
                                 <div class="d-flex justify-content-between mt-3">
                                     <!-- Editar -->
+                                    @role('admin|editor')
                                     <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
+                                    @endrole
+                                    @role('admin|editor')
                                     <!-- Eliminar -->
                                     <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display: inline;">
                                         @csrf
@@ -55,6 +62,7 @@
                                             <i class="fas fa-trash-alt"></i> Eliminar
                                         </button>
                                     </form>
+                                    @endrole
                                 </div>
                             </div>
                         </div>

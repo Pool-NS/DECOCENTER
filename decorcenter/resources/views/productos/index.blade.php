@@ -65,7 +65,9 @@
 
 <h1>Lista de Productos</h1>
 
+@role('admin|editor')
 <a href="{{ route('productos.create') }}" class="btn-agregar">Agregar Producto</a>
+@endrole
 
 <table>
     <thead>
@@ -87,9 +89,11 @@
                 <td>${{ number_format($producto->price, 2) }}</td>
                 <td>{{ $producto->description }}</td>
                 <td>
+                    @role('admin|vendedor')
                     <a href="{{ route('productos.vender.form', $producto->id) }}" class="btn-agregar" style="background-color: #f39c12;">
                         Vender
                     </a>
+                    @endrole
                 </td>
             </tr>
         @endforeach

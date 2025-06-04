@@ -49,6 +49,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Fecha de Registro</th>
+            <th>Rol</th>
         </tr>
     </thead>
     <tbody>
@@ -57,6 +58,7 @@
                 <td>{{ $usuario->name }}</td>
                 <td>{{ $usuario->email }}</td>
                 <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
+                <td>{{ $usuario->getRoleNames()->first() ?? 'Sin rol' }}</td>
             </tr>
         @endforeach
     </tbody>

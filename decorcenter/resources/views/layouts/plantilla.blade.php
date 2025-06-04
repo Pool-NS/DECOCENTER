@@ -201,13 +201,17 @@
                 <h4 class="mt-5">Bienvenido, {{ Auth::user()->name }}</h4>
                 <a href="{{ route('dashboard') }}">Panel de Control</a>
                 <a href="{{ route('productos.index') }}">Ver Productos</a>
+                @role('admin|editor')
                 <a href="{{ route('productos.create') }}">Agregar Producto</a>
                 <a href="{{ route('inventory.logs') }}">Historial de Inventario</a>
+                @endrole
                 <!-- Desplegable de Reportes -->
                 <div class="mt-3">
+                    @role('admin')
                     <a class="d-block" data-bs-toggle="collapse" href="#submenuReportes" role="button" aria-expanded="false" aria-controls="submenuReportes">
                         📊 Reportes ▾
                     </a>
+                    @endrole
                     <div class="collapse" id="submenuReportes">
                         <a href="{{ route('reportes.ventas_por_mes') }}" class="ms-3 d-block mt-2">📈 Ventas por mes</a>
                         <a href="{{ route('reportes.productos_mas_vendidos') }}" class="ms-3 d-block mt-2">🔥 Productos más vendidos</a>

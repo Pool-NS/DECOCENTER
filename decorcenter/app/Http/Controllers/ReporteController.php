@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class ReporteController extends Controller
 {
@@ -81,11 +82,10 @@ class ReporteController extends Controller
 
     public function usuariosRegistrados()
     {
-        $usuarios = \App\Models\User::select('name', 'email', 'created_at')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $usuarios = \App\Models\User::with('roles')->select('id', 'name', 'email', 'created_at')->orderBy('created_at', 'desc')->get();
+        $roles = Role::all(); // Obtén todos los roles
 
-        return view('reportes.usuarios_registrados', compact('usuarios'));
+        return view('reportes.usuarios_registrados', compact('usuarios', 'roles'));
     }
 
 }
