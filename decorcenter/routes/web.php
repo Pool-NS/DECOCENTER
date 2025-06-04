@@ -10,6 +10,7 @@ use App\Http\Controllers\InventoryLogController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ClienteController;
 
 // Ruta principal de la aplicación
 Route::get('/', function () {
@@ -59,6 +60,14 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/reportes/variacion-stock', [ReporteController::class, 'variacionStock'])->name('reportes.variacion_stock');
     Route::get('/reportes/usuarios-registrados', [ReporteController::class, 'usuariosRegistrados'])->name('reportes.usuarios_registrados');
 });
+
+
+Route::get('/ventas/crear', [VentaController::class, 'crear'])->name('ventas.crear');
+Route::post('/ventas', [VentaController::class, 'procesar'])->name('ventas.procesar');
+
+Route::get('/clientes/crear', [ClienteController::class, 'crear'])->name('clientes.crear');
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+
 
 // Cargar las rutas de autenticación generadas por Breeze u otra configuración
 require __DIR__.'/auth.php';

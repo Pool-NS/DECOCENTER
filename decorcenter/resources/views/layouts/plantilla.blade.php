@@ -201,9 +201,13 @@
                 <h4 class="mt-5">Bienvenido, {{ Auth::user()->name }}</h4>
                 <a href="{{ route('dashboard') }}">Panel de Control</a>
                 <a href="{{ route('productos.index') }}">Ver Productos</a>
+                <a href="{{ route('ventas.crear') }}" class="btn btn-primary">Nueva Venta</a>
                 @role('admin|editor')
                 <a href="{{ route('productos.create') }}">Agregar Producto</a>
                 <a href="{{ route('inventory.logs') }}">Historial de Inventario</a>
+                @endrole
+                @role('admin')
+                <a href="{{ route('clientes.crear') }}" class="btn btn-secondary mt-2">Crear Cliente</a>
                 @endrole
                 <!-- Desplegable de Reportes -->
                 <div class="mt-3">

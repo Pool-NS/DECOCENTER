@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('productos', function (Blueprint $table) {
-            $table->integer('stock')->default(0); // o el tipo que necesites
-        });
+       // Schema::table('productos', function (Blueprint $table) {
+        //    $table->integer('stock')->default(0); // o el tipo que necesites
+        //});
     }
     
     public function down()

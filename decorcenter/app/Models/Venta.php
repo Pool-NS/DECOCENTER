@@ -3,13 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Venta extends Model
 {
-    protected $fillable = ['producto_id', 'cantidad', 'precio_unitario'];
+    use HasFactory;
 
-    public function producto()
+    protected $fillable = ['cliente_id', 'fecha'];
+
+    public function cliente()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVenta::class);
     }
 }
